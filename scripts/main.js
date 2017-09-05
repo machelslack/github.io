@@ -10,7 +10,7 @@
     daysOfWeek: [ 'Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
   };
 
-    app.updateForecastCard = function(data) {
+    app.updateForecastCard = (data) => {
 
     let dataLastUpdated = new Date(data.created);
     let sunrise = data.channel.astronomy.sunrise;
@@ -53,8 +53,8 @@
     }
   };
 
-app.getIconClass = function(weatherCode) {
-    // Weather codes: https://developer.yahoo.com/weather/documentation.html#codes
+app.getIconClass = (weatherCode) =>  {
+
     weatherCode = parseInt(weatherCode);
     switch (weatherCode) {
       case 25: 
@@ -118,48 +118,10 @@ app.getIconClass = function(weatherCode) {
   };
 
 
-
-  var initialWeatherForecast = {
-    key: '2459115',
-    label: 'New York, NY',
-    created: '2016-07-22T01:00:00Z',
-    channel: {
-      astronomy: {
-        sunrise: "5:43 am",
-        sunset: "8:21 pm"
-      },
-      item: {
-        condition: {
-          text: "Windy",
-          date: "Thu, 21 Jul 2016 09:00 PM EDT",
-          temp: 56,
-          code: 24
-        },
-        forecast: [
-          {code: 44, high: 86, low: 70},
-          {code: 44, high: 94, low: 73},
-          {code: 4, high: 95, low: 78},
-          {code: 24, high: 75, low: 89},
-          {code: 24, high: 89, low: 77},
-          {code: 44, high: 92, low: 79},
-          {code: 44, high: 89, low: 77}
-        ]
-      },
-      atmosphere: {
-        humidity: 56
-      },
-      wind: {
-        speed: 25,
-        direction: 195
-      }
-    }
-  };
+app.getForcast = (city) =>{
 
 
-app.getForcast = function(city) {
-
-
-let url = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&mode=json&appid=2bd757f23ca948f1953dc3f99d6b3c57`;
+let url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&mode=json&appid=2bd757f23ca948f1953dc3f99d6b3c57`;
 
 let xhr = new XMLHttpRequest();
   xhr.onload = function () { 
@@ -179,7 +141,7 @@ let xhr = new XMLHttpRequest();
 
 
 
-app.decontructData = function (data) { const fiveDays = data.list ;
+app.decontructData =  (data) =>{ const fiveDays = data.list ;
 
 let days = [] ;
 
@@ -204,19 +166,19 @@ app.updateForecastCard(app.initialiseForecast(days));
 
 
 
-app.initialiseForecast = function (days) {
+app.initialiseForecast =  (days) => {
 
 
 
   let forecast = [];
 
-  days.forEach(function(element,index) {
+  days.forEach((element,index) => {
 
   let min = 0, max = 0 , item = "" , compare = -1, current = {},weather =[] ,counts = {};
 
   const dayArray = element;
 
-  dayArray.forEach(function(innerElement,index){
+  dayArray.forEach((innerElement,index) =>{
 
   let marker = index+1;
   
@@ -287,6 +249,5 @@ return initialWeatherForecast;
 
 app.getForcast('London');
 
-//, data => {app.updateForecastCard(decontructData(data));}
 
 })();
